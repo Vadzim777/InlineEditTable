@@ -1,0 +1,21 @@
+lightning-button.delete {
+	--sds-c-button-neutral-color-background: #0C9DDA;
+    --sds-c-button-text-color: #FFFFFF;
+    --sds-c-button-neutral-color-background-hover: red;
+}
+
+table td {
+    white-space: nowrap;
+}
+
+.slds-button__icon {
+    display: none;
+}
+
+td:hover .slds-button__icon { 
+    display: block; 
+}
+
+.lgc-highlight {
+    background-color: rgb(250,255,189);
+}

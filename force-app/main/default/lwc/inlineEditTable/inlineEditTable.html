@@ -1,0 +1,102 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    
+    <article class="slds-card">
+        <div class="slds-card__header slds-grid">
+            <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                <div class="slds-media__body">
+                    <h2 class="slds-card__header-title">
+                        <span class="slds-text-heading_small slds-truncate">LWC Inline Edit Table</span>
+                    </h2>
+                </div>
+            </header>
+        </div>
+        <div class="slds-card__body slds-table_edit_container slds-is-relative">
+            <table class="slds-table slds-table_bordered slds-table_edit slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="slds-is-resizable slds-is-sortable" scope="col">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate slds-m-left_x-small">
+                                <span class="slds-truncate" title="Name">Name</span>
+                            </div>
+                        </th>
+                        <th class="slds-is-resizable slds-is-sortable" scope="col">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate slds-m-left_x-small">
+                                <span class="slds-truncate" title="Rating">Rating</span>
+                            </div>
+                        </th>
+                        <th class="slds-is-resizable slds-is-sortable" scope="col">
+                            <div class="slds-grid slds-grid_vertical-align-center slds-has-flexi-truncate slds-m-left_x-small">
+                                <span class="slds-truncate" title="Delete">Delete</span>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={accountList} for:item="account" for:index="index">
+                        <tr key={account.Id} class="slds-hint-parent" >
+                            <td class="slds-cell-edit" role="gridcell">
+                                <span class="slds-grid slds-grid_align-spread">
+                                    <span class="slds-col slds-size_5-of-6">
+                                        <lightning-input type="text" variant="label-hidden"
+                                            label="" value={account.Name}  
+                                            read-only data-name="accountName" data-id={account.Id}
+                                            onblur={handleFieldBlur}>
+                                        </lightning-input>
+                                    </span>
+                                    <button class="slds-button slds-button_icon slds-m-left_small" title="Edit" 
+                                        data-name="accountName" data-id={account.Id} 
+                                        onclick={editField}> 
+                                        <svg class="slds-button__icon" aria-hidden="true">
+                                            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Edit</span>
+                                    </button>
+                                </span>
+                            </td>
+                            <td class="slds-cell-edit" role="gridcell">
+                                <span class="slds-grid slds-grid_align-spread">
+                                    <span class="slds-truncate comboboxText" title={account.Rating}>
+                                        <lightning-formatted-text value={account.Rating}></lightning-formatted-text>
+                                    </span>
+                                    <template if:true={ratingPicklist.data}>
+                                        <span class="combobox" style="display:none;" data-name="accountRating" data-id={account.Id}>
+                                            <lightning-combobox variant="label-hidden"
+                                                label="" value={account.Rating} options={ratingPicklist.data.values}
+                                                data-name="accountRating" data-id={account.Id}  
+                                                onchange={handleFieldChange} onblur={handleFieldBlur}>
+                                            </lightning-combobox>
+                                        </span>
+                                    </template>
+                                    <button class="slds-button slds-button_icon slds-m-left_small" title="Edit"
+                                        data-name="accountRating" data-id={account.Id} onclick={editField}>
+                                        <svg class="slds-button__icon" aria-hidden="true">
+                                            <use xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#edit"></use>
+                                        </svg>
+                                        <span class="slds-assistive-text">Edit</span>
+                                    </button>
+                                </span>
+                            </td>
+                            <td class="slds-cell-edit" role="gridcell">
+                                <span class="slds-grid slds-grid_align-spread">
+                                    <lightning-button
+                                        data-id={account.Id}
+                                        label="Delete" 
+                                        title="Delete"
+                                        class="delete" 
+                                        onclick={deleteAccount}>
+                                    </lightning-button>
+                                </span>
+                            </td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+        </div>
+        <footer class="slds-card__footer" if:true={showButtons}>
+            <lightning-button icon-name="utility:close" label="Cancel" onclick={cancel}></lightning-button>
+            <lightning-button icon-name="utility:save" class="slds-m-left_x-small" label="Save" variant="Brand" onclick={updateAccount}></lightning-button>
+        </footer>
+    </article>
+    
+</template>
